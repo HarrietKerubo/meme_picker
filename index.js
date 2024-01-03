@@ -4,9 +4,15 @@ const imageBtn = document.querySelector("#get-image-btn");
 const gifsOnlyCheckBox = document.getElementById("gifs-only-option");
 const memeModalInner = document.getElementById("meme-modal-inner");
 const memeModal = document.getElementById("meme-modal");
+const memeModalClose = document.getElementById("meme-modal-close-btn");
 
 imageBtn.addEventListener("click", renderCat);
 emotionRadios.addEventListener("change", highlightCheckedOption);
+memeModalClose.addEventListener("click", closeModal);
+
+function closeModal() {
+  memeModal.style.display = "none";
+}
 
 // Change radio accent color, text and radio div color when a certain mood is selected
 
@@ -56,12 +62,10 @@ function getSingleCatObject() {
 function renderCat() {
   const catObject = getSingleCatObject();
 
-  const catImage = catObject.image;
-
   memeModalInner.innerHTML = `<img 
       class="cat-img" 
-      src="./images/${catImage}"
-      alt="CAT ALT TEXT"
+      src="./images/${catObject.image}"
+      alt="${catObject.alt}"
       >`;
 
   memeModal.style.display = "flex";
