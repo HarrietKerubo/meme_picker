@@ -6,13 +6,11 @@ const memeModalInner = document.getElementById("meme-modal-inner");
 const memeModal = document.getElementById("meme-modal");
 const memeModalClose = document.getElementById("meme-modal-close-btn");
 
-imageBtn.addEventListener("click", renderCat);
 emotionRadios.addEventListener("change", highlightCheckedOption);
+
 memeModalClose.addEventListener("click", closeModal);
 
-function closeModal() {
-  memeModal.style.display = "none";
-}
+imageBtn.addEventListener("click", renderCat);
 
 // Change radio accent color, text and radio div color when a certain mood is selected
 
@@ -25,6 +23,37 @@ function highlightCheckedOption(e) {
 
   document.getElementById(e.target.id).parentElement.classList.add("highlight");
 }
+
+function closeModal() {
+  memeModal.style.display = "none";
+}
+
+// use cat object selected by getSingleCatObject to create HTML string which it will render to the dom
+function renderCat() {
+  const catObject = getSingleCatObject();
+
+  memeModalInner.innerHTML = `<img 
+      class="cat-img" 
+      src="./images/${catObject.image}"
+      alt="${catObject.alt}"
+      >`;
+
+  memeModal.style.display = "flex";
+}
+
+// return a single cat object selected form the array provided by getMatchingCatsArray
+function getSingleCatObject() {
+  const catsArray = getMatchingCatsArray();
+
+  // check if catsArray only has one object and return it  , else, select an object at random then return it
+  if (catsArray.length === 1) {
+    return catsArray[0];
+  } else {
+    const randomNumber = Math.floor(Math.random() * catsArray.length);
+    return catsArray[randomNumber];
+  }
+}
+
 // Get an array of cat objects that meets user's emotion criteria
 function getMatchingCatsArray() {
   if (document.querySelector("input[type=radio]:checked")) {
@@ -43,32 +72,6 @@ function getMatchingCatsArray() {
     });
     return matchingCatsArray;
   }
-}
-
-// return a single cat object selected form the array provided by getMatchingCatsArray
-function getSingleCatObject() {
-  const catsArray = getMatchingCatsArray();
-
-  // check if catsArray only has one object and return it  , else, select an object at random then return it
-  if (catsArray.length === 1) {
-    return catsArray[0];
-  } else {
-    const randomNumber = Math.floor(Math.random() * catsArray.length);
-    return catsArray[randomNumber];
-  }
-}
-
-// use cat object selected by getSingleCatObject to create HTML string which it will render to the dom
-function renderCat() {
-  const catObject = getSingleCatObject();
-
-  memeModalInner.innerHTML = `<img 
-      class="cat-img" 
-      src="./images/${catObject.image}"
-      alt="${catObject.alt}"
-      >`;
-
-  memeModal.style.display = "flex";
 }
 
 //put all emotions in an array

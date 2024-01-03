@@ -60,6 +60,12 @@ header{
     border: 1px solid #bcbcbc;
     border-radius: 5px;
 }
+.emotion-options{
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #bcbcbc;
+    border-radius: 5px;
+}
 
 .radio{
     display: flex;
